@@ -3,16 +3,28 @@ import DepositClient from './deposit-client'
 import { auth } from "@/lib/auth"
 
 export const metadata: Metadata = {
-  title: 'Deposit | Your App Name',
+  title: 'Deposit | Skytrade',
   description: 'Deposit funds into your account',
 }
 
 export default async function DepositPage() {
   const session = await auth()
   
+  if (!session?.user) return null;
+  
   return (
     <main>
-      <DepositClient user={session?.user} />
+      <DepositClient 
+        user={{
+          id: session.user.id ?? '',
+          email: session.user.email ?? ''
+        }} 
+        cards={session.user.id ? [{
+          id: session.user.id,
+          last4: session.user.name ?? 'Unknown',
+          brand: session.user.email ?? 'Unknown'
+        }] : []} 
+      />
     </main>
   )
 }

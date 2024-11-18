@@ -105,8 +105,11 @@ export default function DepositClient({ user, cards }: DepositClientProps) {
                         <SelectGroup>
                           {cards && cards.length > 0 ? (
                             cards.map((card) => (
-                              <SelectItem key={card.id} value={card.id}>
-                                {card.brand} •••• {card.last4}
+                              <SelectItem 
+                                key={card.id} 
+                                value={card.id || 'default-card-id'}
+                              >
+                                {card.brand || 'Unknown'} •••• {card.last4 || '****'}
                               </SelectItem>
                             ))
                           ) : (
