@@ -26,21 +26,32 @@ export default async function Dashboard() {
     
     try {
       client = await connectToDatabase()
+      await client.connect()
       const db = client.db(DB_NAME)
       
       const existingUser = await db.collection('users').findOne({
         email: session.user.email
-      })
+      }, { maxTimeMS: 5000 })
       
       if (!existingUser) {
+        if (client) await client.close()
         redirect('/account?from=home')
       }
       
     } catch (error) {
       console.error('Database connection error:', error)
+      throw error
     } finally {
-      if (client) await client.close()
+      if (client) {
+        try {
+          await client.close()
+        } catch (error) {
+          console.error('Error closing database connection:', error)
+        }
+      }
     }
+  } else {
+    redirect('/login')
   }
   
   return (
