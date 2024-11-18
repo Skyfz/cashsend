@@ -37,7 +37,6 @@ export default async function Dashboard() {
         if (client) await client.close()
         redirect('/account?from=home')
       }
-      
     } catch (error) {
       console.error('Database connection error:', error)
       throw error
