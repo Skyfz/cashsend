@@ -12,26 +12,24 @@ import { Command, CommandGroup, CommandInput, CommandItem } from "@/components/u
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
 
-type AddressResult = {
-  id: string;
-  address: string;
-}
+// type AddressResult = {
+//   id: string;
+//   address: string;
+// }
 
-const mockAddresses: AddressResult[] = [
-  { id: '1', address: '123 Oxford Street, London, W1D 1NU' },
-  { id: '2', address: '456 Baker Street, London, NW1 6XE' },
-  { id: '3', address: '789 Regent Street, London, W1B 4DN' },
-  { id: '4', address: '321 Bond Street, London, W1S 1PJ' },
-  { id: '5', address: '654 Carnaby Street, London, W1F 7DW' },
-];
+// const mockAddresses: AddressResult[] = [
+//   { id: '1', address: '123 Oxford Street, London, W1D 1NU' },
+//   { id: '2', address: '456 Baker Street, London, NW1 6XE' },
+//   { id: '3', address: '789 Regent Street, London, W1B 4DN' },
+//   { id: '4', address: '321 Bond Street, London, W1S 1PJ' },
+//   { id: '5', address: '654 Carnaby Street, London, W1F 7DW' },
+// ];
 
-export default function CardForm({ session }) {
+export default function CardForm() {
   const [paymentMethod, setPaymentMethod] = useState('card')
   const [cardNumber, setCardNumber] = useState('')
-  const [searchValue, setSearchValue] = useState("")
   const [address, setAddress] = useState('')
   const [openAddressSearch, setOpenAddressSearch] = useState(false)
-  const [filteredAddresses, setFilteredAddresses] = useState(mockAddresses)
 
   const formatCardNumber = (value: string) => {
     const cleaned = value.replace(/\D/g, '')
@@ -61,13 +59,9 @@ export default function CardForm({ session }) {
     // })
   }
 
-  const handleSearch = (value: string) => {
-    setSearchValue(value)
-    const filtered = mockAddresses.filter(item => 
-      item.address.toLowerCase().includes(value.toLowerCase())
-    )
-    setFilteredAddresses(filtered)
-  }
+//   const handleSearch = (value: string) => {
+//     // Handle search functionality
+//   }
 
   return (
     <Card className="w-full max-h-[100vh-3rem]" >
@@ -163,7 +157,7 @@ export default function CardForm({ session }) {
                     <PopoverContent className="w-[400px] p-0">
                       <Command>
                         <CommandInput 
-                          placeholder="Search address..." 
+                          placeholder="Search address..."
                         />
                         <CommandGroup>
                           <CommandItem
