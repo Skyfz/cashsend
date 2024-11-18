@@ -68,7 +68,7 @@ export default function SearchPage() {
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
       searchUsers(searchQuery);
-    }, 300);
+    }, 150);
 
     return () => clearTimeout(delayDebounce);
   }, [searchQuery]);
