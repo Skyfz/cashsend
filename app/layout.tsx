@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { Providers } from '@/components/providers'
 import { ThemeProvider } from '@/components/theme-provider'
 import { BreadcrumbNav } from "@/components/breadcrumb-nav"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -37,6 +38,7 @@ function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
           </div>
           <div>
             {children}
+            <SpeedInsights />
           </div>
         </main> 
         <Toaster />
