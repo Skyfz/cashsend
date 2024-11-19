@@ -39,7 +39,12 @@ export default async function Dashboard() {
       }
     } catch (error) {
       console.error('Database connection error:', error)
-      throw error
+      return (
+        <div className="error-container">
+          <h1>Temporarily Unavailable</h1>
+          <p>We&apos;re having trouble connecting to our database. Please try again later.</p>
+        </div>
+      );
     } finally {
       if (client) {
         try {
@@ -69,7 +74,7 @@ export default async function Dashboard() {
                     className="rounded-lg"
                   />
                 ) : (
-                  <div className="w-12 h-12 rounded-lg bg-primary flex items-center justify-center font-medium">
+                  <div className="w-12 h-12 rounded-lg bg-primary flex items-center justify-center font-medium text-secondary">
                     {session?.user?.name?.split(' ')
                       .map(name => name[0])
                       .slice(0, 2)
@@ -93,15 +98,15 @@ export default async function Dashboard() {
                     <h4 className="font-medium leading-none">Notification Settings</h4>
                     <div className="flex items-center justify-between space-x-2">
                       <Label htmlFor="push">Push notifications</Label>
-                      <Switch id="push" />
+                      <Switch className="shadow-md" id="push" />
                     </div>
                     <div className="flex items-center justify-between space-x-2">
                       <Label htmlFor="email">Email notifications</Label>
-                      <Switch id="email" />
+                      <Switch className="shadow-md" id="email" />
                     </div>
                     <div className="flex items-center justify-between space-x-2">
                       <Label htmlFor="marketing">Marketing emails</Label>
-                      <Switch id="marketing" />
+                      <Switch className="shadow-md" id="marketing" />
                     </div>
                   </div>
                 </PopoverContent>

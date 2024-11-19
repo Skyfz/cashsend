@@ -2,8 +2,9 @@
 
 import { motion } from 'framer-motion'
 import { Session } from 'next-auth'
+import type { Cards } from '@/app/types/cards'
 
-export function AnimatedCard({ session }: { session: Session }) {
+export function AnimatedCard({ session, card }: { session: Session; card?: Cards }) {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -32,16 +33,23 @@ export function AnimatedCard({ session }: { session: Session }) {
           <div className="h-full flex flex-col justify-between text-white/90">
             <div className="space-y-2">
               <div className="w-12 h-8 bg-gradient-to-r from-amber-400 to-amber-300 rounded" />
-              <div className="pt-4 font-mono text-xl tracking-wider">•••• •••• •••• 4242</div>
+              <div className="pt-4 font-mono text-xl tracking-wider">
+                •••• •••• •••• {card?.last4 || '4242'}
+              </div>
             </div>
             <div className="flex justify-between items-end">
               <div>
                 <p className="text-xs text-white/60">Card Holder</p>
-                <p className="font-medium">{session?.user?.name || 'Card Holder'}</p>
+                <p className="font-medium">{card?.holderName || session?.user?.name || 'Card Holder'}</p>
               </div>
               <div>
                 <p className="text-xs text-white/60">Expires</p>
-                <p className="font-medium">12/25</p>
+                <p className="font-medium">
+                  {card 
+                    ? `${card.expiryMonth.toString().padStart(2, '0')}/${card.expiryYear.toString().slice(-2)}`
+                    : '12/25'
+                  }
+                </p>
               </div>
             </div>
           </div>

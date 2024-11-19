@@ -4,9 +4,12 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes"
+import { Moon, Sun } from "lucide-react"
 
 export function Lamp() {
   const router = useRouter();
+  const { setTheme, theme } = useTheme()
 
   return (
     <LampContainer>
@@ -18,7 +21,7 @@ export function Lamp() {
           duration: 0.8,
           ease: "easeInOut",
         }}
-        className="mt-16 mb-12 text-center text-4xl font-medium tracking-tight md:text-7xl"
+        className="mt-20 mb-20 text-center text-4xl font-medium tracking-tight md:text-7xl"
       >
         <span className="text-foreground translate-y-[14px] inline-block">Advanced</span>{" "}
         <span className="text-muted-foreground translate-y-[14px] inline-block">Trading Robots</span>
@@ -44,7 +47,7 @@ export function Lamp() {
           duration: 0.8,
           ease: "easeInOut",
         }}
-        className="flex gap-4 items-center flex-col sm:flex-row mt-8"
+        className="flex gap-4 items-center flex-col sm:flex-row"
       >
         <Button
           variant="default"
@@ -58,13 +61,14 @@ export function Lamp() {
           Log In
         </Button>
         <Button
-          variant="outline"
+            variant="ghost"
           size="lg"
-          className="min-w-[150px]"
-          onClick={() => router.push("/docs")}
-        >
-          Read our docs
-        </Button>
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+          >
+            <Sun className="mr-2 items-left rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="mr-2 items-left rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            Toggle theme
+          </Button>
       </motion.div>
     </LampContainer>
   );

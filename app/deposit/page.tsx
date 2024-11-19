@@ -21,7 +21,8 @@ export default async function DepositPage() {
         }} 
         cards={session.user.id ? [{
           id: session.user.id,
-          last4: session.user.name ?? 'Unknown',
+          userId: session.user.id,
+          cardNumber: session.user.name ?? 'Unknown',
           brand: session.user.email ?? 'Unknown'
         }] : []} 
       />

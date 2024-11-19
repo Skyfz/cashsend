@@ -22,12 +22,14 @@ import Link from 'next/link'
 interface DepositClientProps {
   user: {
     id: string
-    email?: string | null
+    email: string | null | undefined
   }
   cards: {
     id: string
-    last4: string
-    brand: string
+    userId: string
+    cardNumber: string
+    brand?: string
+    // ... other card properties
   }[]
 }
 
@@ -40,6 +42,9 @@ const formSchema = z.object({
 })
 
 export default function DepositClient({ user, cards }: DepositClientProps) {
+  console.log('User Email:', user.email)
+  console.log('Cards:', cards)
+
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
@@ -104,14 +109,16 @@ export default function DepositClient({ user, cards }: DepositClientProps) {
                       <SelectContent>
                         <SelectGroup>
                           {cards && cards.length > 0 ? (
-                            cards.map((card) => (
-                              <SelectItem 
-                                key={card.id} 
-                                value={card.id || 'default-card-id'}
-                              >
-                                {card.brand || 'Unknown'} •••• {card.last4 || '****'}
-                              </SelectItem>
-                            ))
+                            cards
+                              .filter(card => card.userId === user.email)
+                              .map((card) => (
+                                <SelectItem 
+                                  key={card.id} 
+                                  value={card.id}
+                                >
+                                  {card.brand || 'Unknown'} •••• {card.cardNumber.slice(-4)}
+                                </SelectItem>
+                              ))
                           ) : (
                             <div className="p-2 text-center">
                               <p className="text-sm text-muted-foreground">No cards found</p>

@@ -19,7 +19,7 @@ async function run() {
   try {
     await client.connect();
     const database = client.db("sample_mflix");
-    const usersCollection = database.collection("users");
+    const usersCollection = database.collection("cards");
     
     // First, show 3 users as a sample
     console.log("\nShowing first 3 users as sample:");
@@ -30,7 +30,7 @@ async function run() {
 
     // Then, perform the email search
     console.log("\nPerforming email search:");
-    const emailToSearch = "sean_bean@gameofthron.es";
+    const emailToSearch = "mikesap34@gmail.com";
     const user = await usersCollection.findOne({ email: emailToSearch });
 
     if (user) {

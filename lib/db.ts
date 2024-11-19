@@ -1,4 +1,5 @@
 import { MongoClient, ServerApiVersion } from "mongodb"
+import { Cards } from '@/app/types/cards';
 
 if (!process.env.MONGODB_URI) {
   throw new Error('Invalid/Missing environment variable: "MONGODB_URI"')
@@ -23,31 +24,36 @@ let client: MongoClient | null = null;
 // Export the connection function
 export const connectToDatabase = async () => {
   try {
-    // Reuse existing connection if available
-    if (client) {
+    if (client?.db().admin()) {
       return client;
     }
 
-    // Create new connection if none exists
+    if (client) {
+      await client.close();
+    }
+
     client = new MongoClient(uri, options);
     await client.connect();
     
-    // Send a ping with timeout
-    await client.db("admin").command({ ping: 1, maxTimeMS: 5000 });
+    // Verify connection
+    await client.db().command({ ping: 1 });
     console.log("Successfully connected to MongoDB!");
+    
+    // Add connection error handler
+    client.on('error', (error) => {
+      console.error('MongoDB connection error:', error);
+      client = null;
+    });
+
     return client;
   } catch (error) {
     console.error("Failed to connect to MongoDB:", error);
-    // Clean up on error
-    if (client) {
-      await client.close();
-      client = null;
-    }
+    client = null;
     throw error;
   }
 }
 
-// Optional: Add a cleanup function for when you need to close the connection
+// Optional: Add a cleanup function for when your app actually needs to close the connection
 export const closeConnection = async () => {
   try {
     if (client) {
@@ -57,6 +63,49 @@ export const closeConnection = async () => {
     }
   } catch (error) {
     console.error("Error closing MongoDB connection:", error);
+    throw error;
+  }
+}
+
+// Add this new function
+export async function getCards(userEmail: string | null | undefined) {
+  if (!userEmail) return []
+  
+  try {
+    const dbClient = await connectToDatabase()
+    // Use isConnected() method
+    if (!dbClient?.db().admin()) {
+      throw new Error('Database connection lost');
+    }
+    
+    const db = dbClient.db('sample_mflix')
+    const cards = await db.collection('cards').find({
+      userId: userEmail
+    }).toArray()
+    
+    console.log('DB Query result:', cards)
+    return cards
+    
+  } catch (error) {
+    console.error('Error fetching cards:', error)
+    return []
+  }
+}
+
+// Add a new function for card operations
+export async function addCard(cardData: Omit<Cards, 'id'>) {
+  try {
+    const dbClient = await connectToDatabase();
+    // Use isConnected() method
+    if (!dbClient?.db().admin()) {
+      throw new Error('Database connection lost');
+    }
+    
+    const db = dbClient.db('sample_mflix');
+    const result = await db.collection('cards').insertOne(cardData);
+    return result;
+  } catch (error) {
+    console.error('Error in addCard:', error);
     throw error;
   }
 }

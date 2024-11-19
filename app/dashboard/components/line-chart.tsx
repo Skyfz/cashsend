@@ -71,7 +71,7 @@ export function Component() {
             <Line
               dataKey="desktop"
               type="natural"
-              stroke={chartConfig.desktop.color}
+              stroke="hsl(var(--primary))"
               strokeWidth={2}
               dot={false}
             />
