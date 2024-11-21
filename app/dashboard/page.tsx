@@ -23,7 +23,8 @@ export default async function Dashboard() {
   
   if (session?.user) {
     let client;
-    
+    let shouldRedirect = false;
+
     try {
       client = await connectToDatabase()
       await client.connect()
@@ -34,8 +35,7 @@ export default async function Dashboard() {
       }, { maxTimeMS: 5000 })
       
       if (!existingUser) {
-        if (client) await client.close()
-        redirect('/account?from=home')
+        shouldRedirect = true;
       }
     } catch (error) {
       console.error('Database connection error:', error)
@@ -53,6 +53,11 @@ export default async function Dashboard() {
           console.error('Error closing database connection:', error)
         }
       }
+    }
+    
+    if (shouldRedirect) {
+      if (client) await client.close()
+      redirect('/account?from=home')
     }
   } else {
     redirect('/login')
