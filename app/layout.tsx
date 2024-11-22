@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/ui/app-sidebar"
 import { auth } from "@/lib/auth"
-import { Toaster } from "@/components/ui/toaster"
 import { Providers } from '@/components/providers'
 import { ThemeProvider } from '@/components/theme-provider'
-import { BreadcrumbNav } from "@/components/breadcrumb-nav"
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { AuthenticatedLayout } from "@/app/components/layouts/authenticated-layout";
+
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,27 +23,6 @@ export const metadata: Metadata = {
   title: "Skytrade",
   description: "Investing Automation",
 };
-
-function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <Providers>
-      <SidebarProvider className="flex">
-        <AppSidebar />
-        <main className="w-full p-4 max-w-2xl mx-auto">
-          <div className="flex max-w-xl items-center ml-4">
-            <SidebarTrigger />
-            <BreadcrumbNav />
-          </div>
-          <div>
-            {children}
-            <SpeedInsights />
-          </div>
-        </main> 
-        <Toaster />
-      </SidebarProvider>
-    </Providers>
-  )
-}
 
 function UnauthenticatedLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -68,9 +45,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           disableTransitionOnChange
         >
           {session ? (
-            <AuthenticatedLayout>
-              {children}
-            </AuthenticatedLayout>
+            <Providers>
+              <AuthenticatedLayout>
+                {children}
+              </AuthenticatedLayout>
+            </Providers>
           ) : (
             <UnauthenticatedLayout>
               {children}
