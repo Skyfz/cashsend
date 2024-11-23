@@ -18,7 +18,7 @@ export function Lamp() {
         className="mt-20 mb-20 text-center text-4xl font-medium tracking-tight md:text-7xl"
       >
         <span className="text-foreground translate-y-[14px] inline-block">Advanced</span>{" "}
-        <span className="text-muted-foreground translate-y-[14px] inline-block">Trading Robots</span>
+        <span className="text-muted-foreground translate-y-[14px] inline-block">Liquidity Systems</span>
       </motion.h1>
       
       <motion.ol
