@@ -5,18 +5,27 @@ import { FlipWords } from "@/components/ui/flip-words";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { Moon, Sun, User } from "lucide-react";
+import { Headset, House, Info, Moon, Sun, Play} from "lucide-react";
+import { FloatingNav } from "@/components/ui/floating-navbar";
+
 
 export default function Home() {
   const { theme, setTheme } = useTheme();
   const router = useRouter();
   
   const words = ["Fast", "Untraceable", "Secure", "Limitless", "Reliable"];
- 
+  const navItems = [
+    { name: "Home", link: "/", icon: <House /> },
+    { name: "About", link: "/about", icon: <Info/> },
+    { name: "Contact", link: "/contact", icon: <Headset/> },
+  ];
 
-    return (
-      <main className="relative w-full h-screen">
-        {/* Background Layer (Bottom) */}
+  return (
+      
+    <main className="relative w-full h-screen">
+      <FloatingNav navItems={navItems} className="z-50"/>
+      
+      {/* Background Layer (Bottom) */}
         <div className="w-full h-screen">
           <div className="absolute inset-0 w-full h-full z-0">
             <BackgroundGradientAnimation />
@@ -28,7 +37,7 @@ export default function Home() {
               <FlipWords words={words} className="md:text-6xl lg:text-8xl" />
               <div className="md:text-6xl lg:text-8xl font-light">Money</div>
             </div>
-              <div className="flex text-secondary p-6">
+              <div className="flex text-foreground p-8">
                 <Button
                   variant="ghost"
                   size="lg"
@@ -37,8 +46,8 @@ export default function Home() {
                     router.push("/login");
                   }}
                 >
-                  <User className="transition-all" />
-                  Log In
+                  <Play className="transition-all" />
+                  Start
                 </Button>
                 
                 <Button

@@ -74,10 +74,10 @@ export function AuthenticatedLayout({ children }: { children: React.ReactNode })
   const renderSidebarLink = (link: SidebarLinkProps, idx: number) => {
     if (link.label === "Logout") {
       return (
-        <AlertDialog>
+        <AlertDialog key={idx}>
           <AlertDialogTrigger asChild>
-            <div>
-              <SidebarLink key={idx} link={link} />
+            <div >
+              <SidebarLink link={link} />
             </div>
           </AlertDialogTrigger>
           <AlertDialogContent>

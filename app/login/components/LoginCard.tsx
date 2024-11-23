@@ -13,9 +13,8 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import FlickeringGrid from "@/components/ui/flickering-grid"
-import { googleSignIn, githubSignIn, resendSignIn } from "@/app/actions/auth"
+import { googleSignIn, githubSignIn} from "@/app/actions/auth"
 import { useState, useEffect } from "react"
-import { Input } from "@/components/ui/input"
 
 export default function LoginCard() {
   const [dimensions, setDimensions] = useState({ height: 0, width: 0 })
@@ -35,7 +34,7 @@ export default function LoginCard() {
         gridGap={15}
         color="gray"
         maxOpacity={0.5}
-        flickerChance={0.1}
+        flickerChance={0.9}
         height={dimensions.height}
         width={dimensions.width}
       />
@@ -50,17 +49,17 @@ export default function LoginCard() {
               </Link>
               <CardTitle className="font-bold text-2xl w-full text-center pb-2">Welcome back</CardTitle>
             </div>
-            <CardDescription className="text-center pb-4">Sign in to your account to continue</CardDescription>
+            <CardDescription className="text-center">Sign in to your account to continue</CardDescription>
           </CardHeader>
           
           <CardContent className="flex flex-col">
-            <form action={resendSignIn} className="flex flex-col gap-4 justify-center max-w-[340px] w-full mx-auto">
+            {/* <form action={resendSignIn} className="flex flex-col gap-4 justify-center max-w-[340px] w-full mx-auto">
               <Input
                 type="email"
                 name="email"
                 placeholder="Enter your email"
                 required
-                className="h-14"
+                className="h-14 text-center"
               />
               <Button 
                 className="w-full h-14 hover:bg-accent hover:text-accent-foreground"
@@ -70,11 +69,11 @@ export default function LoginCard() {
                 <Mail className="mr-2"/>
                 Sign in with email
               </Button>
-            </form>
+            </form> */}
 
-            <div className="relative flex justify-center items-center my-4 max-w-[340px] w-full mx-auto">
+            <div className="relative flex justify-center items-center py-4 max-w-[340px] w-full mx-auto">
               <div className="absolute w-full border-t" />
-              <span className="relative bg-background px-2 text-muted-foreground text-sm">Quick sign in with</span>
+              <span className="relative bg-background px-2 text-muted-foreground text-sm pb-4">Quick sign in with</span>
             </div>
 
             <form action={googleSignIn} className="flex justify-center pb-4 max-w-[340px] w-full mx-auto">

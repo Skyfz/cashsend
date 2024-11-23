@@ -59,8 +59,6 @@ export default async function Dashboard() {
       if (client) await client.close()
       redirect('/account?from=home')
     }
-  } else {
-    redirect('/login')
   }
   
   return (

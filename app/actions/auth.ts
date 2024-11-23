@@ -1,5 +1,4 @@
 "use server"
-
 import { signIn } from "@/lib/auth"
 
 export async function googleSignIn() {
@@ -10,6 +9,3 @@ export async function githubSignIn() {
   await signIn("github")
 }
 
-export async function resendSignIn(formData: FormData) {
-  await signIn("resend", formData)
-}

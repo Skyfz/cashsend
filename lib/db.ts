@@ -1,5 +1,6 @@
-import { MongoClient, ServerApiVersion } from "mongodb"
+import { MongoClient } from "mongodb"
 import { Cards } from '@/app/types/cards';
+import { ServerApiVersion } from "mongodb";
 
 if (!process.env.MONGODB_URI) {
   throw new Error('Invalid/Missing environment variable: "MONGODB_URI"')
@@ -12,15 +13,10 @@ const options = {
     strict: true,
     deprecationErrors: true,
   },
-  serverSelectionTimeoutMS: 5000,
-  connectTimeoutMS: 5000,
-  socketTimeoutMS: 5000,
-  maxPoolSize: 10,
-  minPoolSize: 0,
 }
-
+ 
 let client: MongoClient
-
+ 
 if (process.env.NODE_ENV === "development") {
   // In development mode, use a global variable so that the value
   // is preserved across module reloads caused by HMR (Hot Module Replacement).
@@ -40,31 +36,19 @@ if (process.env.NODE_ENV === "development") {
 // Export the connection function
 export const connectToDatabase = async () => {
   try {
-    if (client?.db().admin()) {
-      return client;
-    }
-
-    if (client) {
-      await client.close();
-    }
-
-    client = new MongoClient(uri, options);
-    await client.connect();
-    
+    const dbClient = await client;
     // Verify connection
-    await client.db().command({ ping: 1 });
+    await dbClient.db().command({ ping: 1 });
     console.log("Successfully connected to MongoDB!");
     
     // Add connection error handler
-    client.on('error', (error) => {
+    dbClient.on('error', (error) => {
       console.error('MongoDB connection error:', error);
-      //client = null;
     });
 
-    return client;
+    return dbClient;
   } catch (error) {
     console.error("Failed to connect to MongoDB:", error);
-    //client = null;
     throw error;
   }
 }
@@ -74,7 +58,6 @@ export const closeConnection = async () => {
   try {
     if (client) {
       await client.close();
-      //client = null;
       console.log("MongoDB connection closed.");
     }
   } catch (error) {
@@ -125,7 +108,6 @@ export async function addCard(cardData: Omit<Cards, 'id'>) {
     throw error;
   }
 }
-
 
 // Export a module-scoped MongoClient. By doing this in a
 // separate module, the client can be shared across functions.
