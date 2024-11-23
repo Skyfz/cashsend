@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub } from "react-icons/fa"
-import { ChevronLeft, Mail } from "lucide-react"
+import { ChevronLeft} from "lucide-react"
 import Link from "next/link"
 import {  
     Card,
