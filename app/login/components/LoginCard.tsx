@@ -53,24 +53,6 @@ export default function LoginCard() {
           </CardHeader>
           
           <CardContent className="flex flex-col">
-            {/* <form action={resendSignIn} className="flex flex-col gap-4 justify-center max-w-[340px] w-full mx-auto">
-              <Input
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                required
-                className="h-14 text-center"
-              />
-              <Button 
-                className="w-full h-14 hover:bg-accent hover:text-accent-foreground"
-                variant="outline" 
-                type="submit"
-              >
-                <Mail className="mr-2"/>
-                Sign in with email
-              </Button>
-            </form> */}
-
             <div className="relative flex justify-center items-center py-4 max-w-[340px] w-full mx-auto">
               <div className="absolute w-full border-t" />
               <span className="relative bg-background px-2 text-muted-foreground text-sm pb-4">Quick sign in with</span>

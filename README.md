@@ -34,3 +34,16 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Environment Variables
+
+For deployment on Vercel, configure the following environment variables:
+
+- `GOOGLE_CLIENT_ID`: OAuth client ID from Google Cloud Console
+- `GOOGLE_CLIENT_SECRET`: OAuth client secret from Google Cloud Console
+- `GITHUB_CLIENT_ID`: OAuth client ID from GitHub Developer settings
+- `GITHUB_CLIENT_SECRET`: OAuth client secret from GitHub Developer settings
+- `NEXTAUTH_URL`: Your deployment URL (e.g., https://your-app.vercel.app)
+- `NEXTAUTH_SECRET`: Random string for session encryption
+
+Make sure to add these environment variables in your Vercel project settings under the "Environment Variables" section before deploying.
