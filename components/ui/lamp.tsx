@@ -49,26 +49,7 @@ export function Lamp() {
         }}
         className="flex gap-4 items-center flex-col sm:flex-row"
       >
-        <Button
-          variant="default"
-          size="lg"
-          className="min-w-[150px]"
-          onClick={() => {
-            console.log("user clicked log in button at root");
-            router.push("/login");
-          }}
-        >
-          Log In
-        </Button>
-        <Button
-            variant="ghost"
-          size="lg"
-            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-          >
-            <Sun className="mr-2 items-left rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="mr-2 items-left rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            Toggle theme
-          </Button>
+        
       </motion.div>
     </LampContainer>
   );
