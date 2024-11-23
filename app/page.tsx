@@ -6,16 +6,13 @@ import { BackgroundGradientAnimation } from "@/components/ui/background-gradient
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Moon, Sun, User } from "lucide-react";
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 
 export default function Home() {
   const { theme, setTheme } = useTheme();
   const router = useRouter();
   
   const words = ["Fast", "Untraceable", "Secure", "Limitless", "Reliable"];
-  
-  const colors = ["#ffffff", "#0008ff", "#6366f1"];
-  
+ 
 
     return (
       <main className="relative w-full h-screen">

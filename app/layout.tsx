@@ -5,7 +5,7 @@ import { auth } from "@/lib/auth"
 import { Providers } from '@/components/providers'
 import { ThemeProvider } from '@/components/theme-provider'
 import { AuthenticatedLayout } from "@/app/components/layouts/authenticated-layout";
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 
 const geistSans = localFont({
@@ -56,6 +56,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </UnauthenticatedLayout>
           )}
         </ThemeProvider>
+        <SpeedInsights />
       </body>
     </html>
   )

@@ -2,14 +2,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { useTheme } from "next-themes"
-import { Moon, Sun } from "lucide-react"
 
 export function Lamp() {
-  const router = useRouter();
-  const { setTheme, theme } = useTheme()
 
   return (
     <LampContainer>
