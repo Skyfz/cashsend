@@ -20,7 +20,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Skytrade",
+  title: "Cashsend",
   description: "Investing Automation",
 };
 

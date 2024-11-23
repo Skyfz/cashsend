@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub } from "react-icons/fa"
-import { ChevronLeft } from "lucide-react"
+import { ChevronLeft, Mail } from "lucide-react"
 import Link from "next/link"
 import {  
     Card,
@@ -13,9 +13,19 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import FlickeringGrid from "@/components/ui/flickering-grid"
-import { googleSignIn, githubSignIn } from "@/app/actions/auth"
+import { googleSignIn, githubSignIn, resendSignIn } from "@/app/actions/auth"
+import { useState, useEffect } from "react"
+import { Input } from "@/components/ui/input"
 
 export default function LoginCard() {
+  const [dimensions, setDimensions] = useState({ height: 0, width: 0 })
+
+  useEffect(() => {
+    setDimensions({
+      height: window.innerHeight,
+      width: window.innerWidth
+    })
+  }, [])
 
   return (
     <div className="h-screen w-screen flex items-center justify-center relative overflow-hidden">
@@ -26,8 +36,8 @@ export default function LoginCard() {
         color="gray"
         maxOpacity={0.5}
         flickerChance={0.1}
-        height={window.innerHeight}
-        width={window.innerWidth}
+        height={dimensions.height}
+        width={dimensions.width}
       />
       <Card className="w-full max-w-xl p-4 m-4 relative z-10">
         <div className="w-full flex flex-col p-4">
@@ -38,12 +48,35 @@ export default function LoginCard() {
                   <ChevronLeft className="h-4 w-4" />
                 </Button>
               </Link>
-              <CardTitle className="font-bold text-2xl w-full text-center pb-2">Log in</CardTitle>
+              <CardTitle className="font-bold text-2xl w-full text-center pb-2">Welcome back</CardTitle>
             </div>
-            <CardDescription className="text-center pb-4">Choose your service provider</CardDescription>
+            <CardDescription className="text-center pb-4">Sign in to your account to continue</CardDescription>
           </CardHeader>
           
           <CardContent className="flex flex-col">
+            <form action={resendSignIn} className="flex flex-col gap-4 justify-center max-w-[340px] w-full mx-auto">
+              <Input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+                className="h-14"
+              />
+              <Button 
+                className="w-full h-14 hover:bg-accent hover:text-accent-foreground"
+                variant="outline" 
+                type="submit"
+              >
+                <Mail className="mr-2"/>
+                Sign in with email
+              </Button>
+            </form>
+
+            <div className="relative flex justify-center items-center my-4 max-w-[340px] w-full mx-auto">
+              <div className="absolute w-full border-t" />
+              <span className="relative bg-background px-2 text-muted-foreground text-sm">Quick sign in with</span>
+            </div>
+
             <form action={googleSignIn} className="flex justify-center pb-4 max-w-[340px] w-full mx-auto">
               <Button 
                 className="w-full h-14 hover:bg-accent hover:text-accent-foreground"

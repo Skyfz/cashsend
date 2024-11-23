@@ -3,7 +3,7 @@ import DepositClient from './deposit-client'
 import { auth } from "@/lib/auth"
 
 export const metadata: Metadata = {
-  title: 'Deposit | Skytrade',
+  title: 'Deposit | Cashsend',
   description: 'Deposit funds into your account',
 }
 

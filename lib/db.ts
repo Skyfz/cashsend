@@ -19,7 +19,23 @@ const options = {
   minPoolSize: 0,
 }
 
-let client: MongoClient | null = null;
+let client: MongoClient
+
+if (process.env.NODE_ENV === "development") {
+  // In development mode, use a global variable so that the value
+  // is preserved across module reloads caused by HMR (Hot Module Replacement).
+  const globalWithMongo = global as typeof globalThis & {
+    _mongoClient?: MongoClient
+  }
+
+  if (!globalWithMongo._mongoClient) {
+    globalWithMongo._mongoClient = new MongoClient(uri, options)
+  }
+  client = globalWithMongo._mongoClient
+} else {
+  // In production mode, it's best to not use a global variable.
+  client = new MongoClient(uri, options)
+}
 
 // Export the connection function
 export const connectToDatabase = async () => {
@@ -42,13 +58,13 @@ export const connectToDatabase = async () => {
     // Add connection error handler
     client.on('error', (error) => {
       console.error('MongoDB connection error:', error);
-      client = null;
+      //client = null;
     });
 
     return client;
   } catch (error) {
     console.error("Failed to connect to MongoDB:", error);
-    client = null;
+    //client = null;
     throw error;
   }
 }
@@ -58,7 +74,7 @@ export const closeConnection = async () => {
   try {
     if (client) {
       await client.close();
-      client = null;
+      //client = null;
       console.log("MongoDB connection closed.");
     }
   } catch (error) {
@@ -109,3 +125,8 @@ export async function addCard(cardData: Omit<Cards, 'id'>) {
     throw error;
   }
 }
+
+
+// Export a module-scoped MongoClient. By doing this in a
+// separate module, the client can be shared across functions.
+export default client
